@@ -4,6 +4,6 @@ module.exports = {
   extensions: [".js", ".jsx"],
   alias: {
     '~': path.resolve(__dirname, '../src/js/'),
-    'scss': path.resolve(__dirname, '../src/scss')
+    'sass': path.resolve(__dirname, '../src/sass')
   }
 };

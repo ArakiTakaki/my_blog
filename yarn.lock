@@ -7797,7 +7797,7 @@ rc@^1.0.1, rc@^1.1.6, rc@^1.2.7:
 
 react-creator@ArakiTakaki/react-creator.git:
   version "0.0.3"
-  resolved "https://codeload.github.com/ArakiTakaki/react-creator/tar.gz/14919071e9c4218a676ef3ef08f1682cff3db54d"
+  resolved "https://codeload.github.com/ArakiTakaki/react-creator/tar.gz/c19cb10e2f565c09f8327fca92e69da99535863f"
   dependencies:
     change-case "^3.0.2"
     co "^4.6.0"
