@@ -1,5 +1,15 @@
-
 // ブレークポイント
-@mixin breakpoint($width)
-  @media only screen and (min-width: $width)
-    @content
+=breakpoint($width)
+    @media only screen and (min-width: $width)
+        @content
+
+// 簡易分割
+=col($col-set)
+    width: 100 / 12 * $col-set * 1%
+
+=offset($off-set)
+    margin-left: 100 / 12 * $off-set * 1%
+
+=container()
+    padding: 0 2%
+    width: 96%

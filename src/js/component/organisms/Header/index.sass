@@ -1,0 +1,19 @@
+@import "~sass/aggregation"
+
+.root
+  display: flex
+  align-items: center
+  justify-content: space-between
+  box-shadow: 0 0 20px rgba(0,0,0,0.4);
+  height: 70px
+  background-color: $primary
+
+.title
+  +col(4)
+  +offset(1)
+  display: flex
+  align-items: center
+  h1
+    font-size: 3rem
+    font-weight: bold
+    color: $font-white
