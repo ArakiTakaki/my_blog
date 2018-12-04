@@ -1,5 +1,5 @@
 const moment = require("moment-timezone");
-const { timezone } = require("../config/config");
+const { timezone } = require("../../config/config");
 moment.tz.setDefault(timezone);
 
 /**

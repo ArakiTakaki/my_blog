@@ -29,6 +29,7 @@
     "sqlite3": "^4.0.3"
   },
   "devDependencies": {
+    "morgan": "^1.9.1",
     "node-dev": "^3.1.3"
   }
 }
