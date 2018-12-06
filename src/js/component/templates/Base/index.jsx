@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import styles from "./index.sass";
-import { Header } from "../../organisms/";
+import { Header, ArticleExcerpt } from "../../organisms/";
 
 class Base extends React.Component {
   render() {
@@ -10,7 +10,12 @@ class Base extends React.Component {
       <div className={styles.root}>
         <Header />
         <section className={styles.content}>
-          <div className={styles.body}>aiueo,kakikukeko,sasisuseso</div>
+          <div className={styles.body}>
+            <ArticleExcerpt />
+            <ArticleExcerpt />
+            <ArticleExcerpt />
+            <ArticleExcerpt />
+          </div>
           <div className={styles.nav}>asdf</div>
         </section>
       </div>

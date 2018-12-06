@@ -1,0 +1,44 @@
+@import "~sass/aggregation"
+
+.root
+  margin-bottom: 50px
+  border: 1px solid #333
+  border-radius: 1rem
+  overflow: hidden
+  box-shadow: 0 5px 20px rgba(0,0,0,.4);
+
+.header
+  background-color: $black
+  &>h1
+    color: $font-white
+    font-size: 3rem
+    font-weight: bold
+    line-height: 6rem
+    margin-left: 2rem
+
+.image
+  height: 200px
+  background-color: #008000
+
+.content
+  height: 200px
+  background: #fff
+  &>p
+    color: $black
+    font-size: 1.5rem
+    padding: 10px
+    font-family: $serif
+
+.foot_action
+  display: flex
+  background-color: #fff
+  align-items: center
+  &>button
+    padding: 1rem
+    display: block
+    letter-spacing: 1rem
+    width: 100%
+    font-weight: bold
+    font-size: 1.5rem
+    &:hover
+      background-color: red
