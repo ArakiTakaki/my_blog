@@ -1,30 +1,19 @@
 package main
 
 import (
-	"fmt"
-	"io/ioutil"
-	"net/http"
-
 	"github.com/ArakiTakaki/my_blog/goserver/db"
 	"github.com/ArakiTakaki/my_blog/goserver/routes"
 	"github.com/gin-gonic/gin"
+	_ "github.com/jinzhu/gorm/dialects/sqlite"
 )
 
 func main() {
-	content, err := ioutil.ReadFile("db/queries/users_table.sql")
-	if err != nil {
-		panic(err)
-	}
-	fmt.Println(string(content))
+	database := db.GetDB()
+	db.Migration(database)
+	database.Close()
 
-	r := gin.New()
-	routes.SetApi(r)
+	server := gin.New()
+	routes.SetApi(server)
 
-	db.GetDB()
-	// static files
-	r.StaticFile("bundle.js", "./public/bundle.js")
-	r.NoRoute(func(c *gin.Context) {
-		c.HTML(http.StatusOK, "index.html", nil)
-	})
-	r.Run(":3000")
+	server.Run(":3000")
 }

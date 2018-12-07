@@ -1,45 +1,45 @@
 package db
 
 import (
-	"database/sql"
-	"fmt"
-	"io/ioutil"
+	"time"
 
-	_ "github.com/mattn/go-sqlite3"
+	"github.com/ArakiTakaki/my_blog/goserver/model"
+	"github.com/jinzhu/gorm"
 )
 
-func GetDB() {
-
-	content, err := ioutil.ReadFile("db/queries/users_table.sql")
-	if err != nil {
-		fmt.Println("======= ERROR =======")
-		panic(err)
-	}
-	fmt.Println(string(content))
-	// データベースのコネクションを開く
-	db, err := sql.Open("sqlite3", "./test.db")
-	if err != nil {
-		panic(err)
-	}
-	defer db.Close()
-	// テーブル作成
-	_, err = db.Exec(
-		`CREATE TABLE IF NOT EXISTS "BOOKS" ("ID" INTEGER PRIMARY KEY, "TITLE" VARCHAR(255))`,
-	)
+// GetDB BDオブジェクトを取得する
+func GetDB() *gorm.DB {
+	db, err := gorm.Open("sqlite3", "test.db")
 	if err != nil {
 		panic(err)
 	}
 
-	res, err := db.Exec(
-		`INSERT INTO BOOKS (ID, TITLE) VALUES (?, ?)`,
-		2,
-		"title",
-	)
-	id, err := res.LastInsertId()
-	if err != nil {
-		panic(err)
-	}
-	fmt.Println("====== PRINT ID =======")
-	fmt.Println(id)
-	// fmt.Println(string(item))
+	user := model.User{}
+	db.First(&user)
+	return db
+}
+
+// Migration データベースの必要なテーブルを定義
+func Migration(db *gorm.DB) {
+	db.AutoMigrate(&model.User{})
+	db.AutoMigrate(&model.UserMeta{})
+	db.AutoMigrate(&model.Post{})
+	db.AutoMigrate(&model.PostDetail{})
+	db.AutoMigrate(&model.Comment{})
+	db.AutoMigrate(&model.CommentMeta{})
+}
+
+// User 初期設定
+func User(db *gorm.DB) {
+	user := model.User{}
+	user.ID = 1
+	user.CreatedAt = time.Now()
+	user.UpdatedAt = time.Now()
+	user.Age = 20
+	user.DisplayName = "araki"
+	user.Email = "sjyyj008@gmail.com"
+	user.Birthday = time.Now()
+	user.Name = "araki takkai"
+	user.Password = "aiefjaskljfdlk"
+	db.Create(&user)
 }
