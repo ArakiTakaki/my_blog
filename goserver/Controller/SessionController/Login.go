@@ -3,7 +3,9 @@ package SessionController
 import (
 	"net/http"
 
+	"github.com/ArakiTakaki/my_blog/goserver/db"
 	"github.com/ArakiTakaki/my_blog/goserver/model"
+	"github.com/gin-gonic/contrib/sessions"
 	"github.com/gin-gonic/gin"
 )
 
@@ -21,21 +23,18 @@ func LoginController(c *gin.Context) {
 		return
 	}
 
-	// database := db.GetDB()
-	// defer database.Close()
+	database := db.GetDB()
+	defer database.Close()
 	user := model.User{}
-	user.Login = "hogehoge"
-	user.Password = "123"
-
-	// database.Where("login = ?", json.User).First(&user)
-	if user.Password != json.Password {
+	database.Where("login = ?", json.User).First(&user)
+	err = user.CanLogin(json.Password)
+	if err != nil {
 		c.JSON(http.StatusUnauthorized, gin.H{"status": "NG"})
 		return
 	}
-
-	// session := sessions.Default(c)
-	// session.Set("alive", true)
-	// session.Set("userID", user.ID)
-	// session.Save()
-	c.JSON(http.StatusOK, gin.H{"status": "OK"})
+	session := sessions.Default(c)
+	session.Set("alive", true)
+	session.Set("userID", user.ID)
+	session.Save()
+	c.JSON(http.StatusOK, gin.H{"status": "OK", "user_id": user.ID})
 }

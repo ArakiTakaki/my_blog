@@ -10,21 +10,21 @@ import (
 // User ユーザーの基本的な情報
 type User struct {
 	gorm.Model
-	Login       string `gorm:"index"`
-	Password    string
-	Age         int
-	Birthday    time.Time
-	DisplayName string `gorm:"size:255"`
-	Email       string
-	Name        string
-	IgnoreMe    int        `gorm:"-"` // Ignore this field
+	Login       string     `json:"login" gorm:"unique_index;not null" binding:"required"`
+	Password    string     `json:"password" binding:"required"`
+	Age         int        `json:"age"`
+	Birthday    time.Time  `json:"birthday"`
+	DisplayName string     `json:"display_name" gorm:"size:255"`
+	Email       string     `json:"email"`
+	Name        string     `json:"name"`
+	IgnoreMe    int        `json:"-" gorm:"-"` // Ignore this field
 	Meta        []UserMeta `gorm:"foreignkey:UserID;association_foreignkey:ID"`
 	Post        []Post     `gorm:"foreignkey:UserID;association_foreignkey:ID"`
 }
 
 // SetPassword パスワードをセットする
-func (u *User) SetPassword(password string) {
-	hash, e := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)
+func (u *User) HashToPassword() {
+	hash, e := bcrypt.GenerateFromPassword([]byte(u.Password), bcrypt.DefaultCost)
 	if e != nil {
 		panic(e)
 	}
@@ -32,9 +32,9 @@ func (u *User) SetPassword(password string) {
 }
 
 // CanLogin パスワードを比較するメソッド
-func (u *User) CanLogin(password string) (uint, error) {
+func (u *User) CanLogin(password string) error {
 	err := bcrypt.CompareHashAndPassword([]byte(u.Password), []byte(password))
-	return u.ID, err
+	return err
 }
 
 // UserMeta ユーザの詳細情報

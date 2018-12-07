@@ -25,6 +25,7 @@ func SetApi(r *gin.Engine) {
 	auth := api.Group("auth")
 	{
 		auth.POST("/login", SessionController.LoginController)
+		auth.POST("/register", SessionController.Register)
 	}
 
 	// static files
