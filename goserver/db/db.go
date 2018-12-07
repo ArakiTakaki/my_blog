@@ -10,12 +10,10 @@ import (
 // GetDB BDオブジェクトを取得する
 func GetDB() *gorm.DB {
 	db, err := gorm.Open("sqlite3", "test.db")
+	db.LogMode(true)
 	if err != nil {
 		panic(err)
 	}
-
-	user := model.User{}
-	db.First(&user)
 	return db
 }
 

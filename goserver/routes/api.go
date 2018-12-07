@@ -4,6 +4,7 @@ import (
 	"net/http"
 
 	"github.com/ArakiTakaki/my_blog/goserver/Controller/PostController"
+	"github.com/ArakiTakaki/my_blog/goserver/Controller/SessionController"
 	"github.com/gin-gonic/gin"
 )
 
@@ -17,9 +18,15 @@ func SetApi(r *gin.Engine) {
 	api := r.Group("api")
 	posts := api.Group("posts")
 	{
+		posts.POST("/create", PostController.Create)
+		posts.GET("/:articleID/edit", PostController.Edit)
 		posts.GET("/", PostController.All)
-
 	}
+	auth := api.Group("auth")
+	{
+		auth.POST("/login", SessionController.LoginController)
+	}
+
 	// static files
 	r.StaticFile("bundle.js", "./public/bundle.js")
 	r.NoRoute(func(c *gin.Context) {

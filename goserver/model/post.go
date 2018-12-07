@@ -7,9 +7,10 @@ import (
 // Post 記事の投稿の基盤となるクラス
 type Post struct {
 	gorm.Model
-	Title         string
-	Excerpt       string
-	Status        string
+	Title   string
+	Excerpt string
+	// open: 公開状態, close: 閲覧禁止, temp: 一時保存, limited : 限定公開
+	Status        string `gorm:"index"`
 	CommentStatus string
 	Password      string
 	UserID        uint
