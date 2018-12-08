@@ -7,21 +7,21 @@ import (
 // Post 記事の投稿の基盤となるクラス
 type Post struct {
 	gorm.Model
-	Title   string
-	Excerpt string
+	Title   string `json:"title"`
+	Excerpt string `json:"excerpt"`
 	// open: 公開状態, close: 閲覧禁止, temp: 一時保存, limited : 限定公開
-	Status        string `gorm:"index"`
-	CommentStatus string
-	Password      string
-	UserID        uint
-	Detail        PostDetail
+	Status        string     `json:"status" gorm:"index"`
+	CommentStatus string     `json:"comment_status"`
+	Password      string     `json:"password"`
+	UserID        uint       `json:"-"`
+	Detail        PostDetail `json:"defail"`
 }
 
 // PostDetail 投稿された記事の詳細
 type PostDetail struct {
 	gorm.Model
-	Content string
-	Comment []Comment
+	Content string    `json:"content"`
+	Comment []Comment `json:"comments"`
 }
 
 // Comment 記事に投下されたコメント

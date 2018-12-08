@@ -2,6 +2,7 @@ package main
 
 import (
 	"github.com/ArakiTakaki/my_blog/goserver/db"
+	"github.com/ArakiTakaki/my_blog/goserver/middleware"
 	"github.com/ArakiTakaki/my_blog/goserver/routes"
 	"github.com/gin-gonic/contrib/sessions"
 	"github.com/gin-gonic/gin"
@@ -17,6 +18,7 @@ func main() {
 	store := sessions.NewCookieStore([]byte("secret"))
 	server.Use(sessions.Sessions("MySession", store))
 
+	middleware.SetMiddleware(server)
 	// routing
 	routes.SetApi(server)
 

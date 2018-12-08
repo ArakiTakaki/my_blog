@@ -3,6 +3,7 @@ package SessionController
 import (
 	"net/http"
 
+	"github.com/ArakiTakaki/my_blog/goserver/content/sessionContent"
 	"github.com/ArakiTakaki/my_blog/goserver/db"
 	"github.com/ArakiTakaki/my_blog/goserver/model"
 	"github.com/gin-gonic/contrib/sessions"
@@ -33,8 +34,8 @@ func LoginController(c *gin.Context) {
 		return
 	}
 	session := sessions.Default(c)
-	session.Set("alive", true)
-	session.Set("userID", user.ID)
+	session.Set(sessionContent.Alive, true)
+	session.Set(sessionContent.UserID, user.ID)
 	session.Save()
 	c.JSON(http.StatusOK, gin.H{"status": "OK", "user_id": user.ID})
 }

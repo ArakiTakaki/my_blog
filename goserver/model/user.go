@@ -18,11 +18,11 @@ type User struct {
 	Email       string     `json:"email"`
 	Name        string     `json:"name"`
 	IgnoreMe    int        `json:"-" gorm:"-"` // Ignore this field
-	Meta        []UserMeta `gorm:"foreignkey:UserID;association_foreignkey:ID"`
-	Post        []Post     `gorm:"foreignkey:UserID;association_foreignkey:ID"`
+	Meta        []UserMeta `json:"meta" gorm:"foreignkey:UserID;association_foreignkey:ID"`
+	Posts       []Post     `json:"posts" gorm:"foreignkey:UserID;association_foreignkey:ID"`
 }
 
-// SetPassword パスワードをセットする
+// HashToPassword パスワードをセットする
 func (u *User) HashToPassword() {
 	hash, e := bcrypt.GenerateFromPassword([]byte(u.Password), bcrypt.DefaultCost)
 	if e != nil {

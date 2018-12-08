@@ -10,3 +10,7 @@ curl -v -X POST \
   http://localhost:3000/api/auth/register \
   -H 'content-type: application/json' \
   -d '{ "login": "takaki", "password": "araki_admin" }'
+curl -v  -X POST http://localhost:3000/api/auth/logout
+
+# posts
+curl -v http://localhost:3000/api/posts/
