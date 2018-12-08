@@ -22,5 +22,5 @@ func main() {
 	// routing
 	routes.SetApi(server)
 
-	server.Run(":3000")
+	server.Run("127.0.0.1:3000")
 }
