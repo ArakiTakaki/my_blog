@@ -1,8 +1,0 @@
-CREATE TABLE IF NOT EXISTS "posts"(
-  "id" INDEGER PRIMARY KEY AUTOINCREMENT,
-  "post" TEXT NOT NULL,
-  "sample" TEXT,
-
-  "name" TEXT NOT NULL,
-  "password" TEXT NOT NULL
-);

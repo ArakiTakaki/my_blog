@@ -22,8 +22,8 @@ func SetApi(r *gin.Engine) {
 	// postsDB関連の操作
 	posts := api.Group("posts")
 	{
-		posts.POST("/create", middleware.AuthUser, PostController.Create)
-		posts.GET("/:articleID/edit", middleware.AuthUser, PostController.Edit)
+		posts.POST("/create", PostController.Create)
+		// posts.GET("/:articleID/edit", middleware.AuthUser, PostController.Edit)
 		posts.GET("/", PostController.All)
 	}
 
