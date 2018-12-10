@@ -51,7 +51,7 @@ curl -v -X POST \
     "comment_status": "sample_state",
     "password": "sample",
     "detail": {
-      "content": "ssample_content"
+      "content": "これはサンプル記事です、一応テキストはそれっぽく長めに使用しようと思っておりテストテキストあいうえお"
     }
   }'
 
