@@ -10,11 +10,11 @@ import (
 // User ユーザーの基本的な情報
 type User struct {
 	gorm.Model
-	Login       string     `json:"login" gorm:"unique_index;not null" binding:"required"`
+	Login       string     `json:"login" sql:"index" gorm:"primary_key;not null;unique_index" binding:"required"`
 	Password    string     `json:"password" binding:"required"`
 	Age         int        `json:"age"`
 	Birthday    time.Time  `json:"birthday"`
-	DisplayName string     `json:"display_name" gorm:"size:255"`
+	DisplayName string     `json:"display_name" gorm:"size:30"`
 	Email       string     `json:"email"`
 	Name        string     `json:"name"`
 	IgnoreMe    int        `json:"-" gorm:"-"` // Ignore this field
@@ -23,7 +23,7 @@ type User struct {
 }
 
 // HashToPassword パスワードをセットする
-func (u *User) HashToPassword() {
+func (u *User) PasswordToHash() {
 	hash, e := bcrypt.GenerateFromPassword([]byte(u.Password), bcrypt.DefaultCost)
 	if e != nil {
 		panic(e)

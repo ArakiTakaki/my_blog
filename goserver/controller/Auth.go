@@ -21,7 +21,7 @@ func AuthLogin(c *gin.Context) {
 	var json loginModel
 	err := c.ShouldBindJSON(&json)
 	if err != nil {
-		c.JSON(http.StatusUnauthorized, gin.H{"status": "NG"})
+		c.JSON(http.StatusUnauthorized, gin.H{"message": "NG"})
 		return
 	}
 
@@ -31,14 +31,14 @@ func AuthLogin(c *gin.Context) {
 	database.Where("login = ?", json.User).First(&user)
 	err = user.CanLogin(json.Password)
 	if err != nil {
-		c.JSON(http.StatusUnauthorized, gin.H{"status": "NG"})
+		c.JSON(http.StatusUnauthorized, gin.H{"message": "NG"})
 		return
 	}
 	session := sessions.Default(c)
 	session.Set(content.SessionAlive, true)
 	session.Set(content.SessionUserID, user.ID)
 	session.Save()
-	c.JSON(http.StatusOK, gin.H{"status": "OK", "user_id": user.ID})
+	c.JSON(http.StatusOK, gin.H{"messgage": "OK", "user_id": user.ID, "user_name": user.DisplayName, "full_name": user.Name})
 }
 
 // AuthLogout 会員登録する際のメソッド
@@ -53,7 +53,23 @@ func AuthRegister(c *gin.Context) {
 	var user model.User
 	err := c.ShouldBindJSON(&user)
 	if err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"status": "NG"})
+		c.JSON(http.StatusBadRequest, gin.H{"message": "NG"})
 		return
 	}
+	user.PasswordToHash()
+
+	data := db.GetDB()
+	defer data.Close()
+	result := data.Create(&user)
+	if result.Error != nil {
+		c.JSON(http.StatusOK, gin.H{"message": "NG"})
+		return
+	}
+	c.JSON(http.StatusOK, gin.H{"message": "OK"})
+}
+
+// AuthEdit 会員情報を変更する際のメソッド
+func AuthEdit(c *gin.Context) {
+	// TODO 必要になったら記載する
+	return
 }

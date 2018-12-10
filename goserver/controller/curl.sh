@@ -9,13 +9,29 @@
 curl -v -X POST \
   http://localhost:3000/api/auth/login \
   -H 'content-type: application/json' \
-  -d '{ "user": "takaki", "password": "araki_admin" }'
+  -d '{ "user": "arakikikii", "password": "aiueo" }'
 
 # register
 curl -v -X POST \
   http://localhost:3000/api/auth/register \
   -H 'content-type: application/json' \
   -d '{ "login": "takaki", "password": "araki_admin" }'
+curl -v  -X POST http://localhost:3000/api/auth/logout
+
+# regist
+curl -v -X POST \
+  http://localhost:3000/api/auth/register \
+  -H 'content-type: application/json' \
+  -d '
+  {
+    "login":"arakikikii",
+    "password":"aiueo",
+    "age":10,
+    "display_name":"ARAKKEY",
+    "email":"sjyyj008@gmail.com",
+    "name":"荒木駿輝"
+  }'
+
 curl -v  -X POST http://localhost:3000/api/auth/logout
 
 # =============================================

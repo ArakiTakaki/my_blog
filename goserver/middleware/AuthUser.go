@@ -4,7 +4,6 @@ import (
 	"net/http"
 
 	"github.com/ArakiTakaki/my_blog/goserver/content"
-	"github.com/ArakiTakaki/my_blog/goserver/content/sessionContent"
 	"github.com/gin-gonic/contrib/sessions"
 	"github.com/gin-gonic/gin"
 )
@@ -14,10 +13,10 @@ import (
 func AuthUser(c *gin.Context) {
 	session := sessions.Default(c)
 	if !content.SessionMode {
-		session.Set(sessionContent.Alive, true)
-		session.Set(sessionContent.UserID, 1)
+		session.Set(content.SessionAlive, true)
+		session.Set(content.SessionUserID, uint(1))
 	}
-	alive := session.Get(sessionContent.Alive)
+	alive := session.Get(content.SessionAlive)
 	if alive == nil {
 		c.JSON(http.StatusUnauthorized, gin.H{"message": "不正なページへのアクセスです"})
 		c.Abort()
