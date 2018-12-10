@@ -1,6 +1,9 @@
 package main
 
 import (
+	"fmt"
+
+	"github.com/ArakiTakaki/my_blog/goserver/content"
 	"github.com/ArakiTakaki/my_blog/goserver/db"
 	"github.com/ArakiTakaki/my_blog/goserver/middleware"
 	"github.com/ArakiTakaki/my_blog/goserver/routes"
@@ -21,6 +24,10 @@ func main() {
 	middleware.SetMiddleware(server)
 	// routing
 	routes.SetApi(server)
+
+	fmt.Println("====================== MODE ======================")
+	fmt.Println(content.MODE)
+	fmt.Println("====================== MODE ======================")
 
 	server.Run(":3000")
 }

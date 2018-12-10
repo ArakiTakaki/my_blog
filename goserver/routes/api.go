@@ -5,10 +5,11 @@ import (
 
 	"github.com/ArakiTakaki/my_blog/goserver/middleware"
 
-	"github.com/ArakiTakaki/my_blog/goserver/Controller/PostController"
-	"github.com/ArakiTakaki/my_blog/goserver/Controller/SessionController"
+	"github.com/ArakiTakaki/my_blog/goserver/controller"
 	"github.com/gin-gonic/gin"
 )
+
+const ARTICLE_ID = "articleID"
 
 // SetApi APIをセットする関数
 func SetApi(r *gin.Engine) {
@@ -22,17 +23,18 @@ func SetApi(r *gin.Engine) {
 	// postsDB関連の操作
 	posts := api.Group("posts")
 	{
-		posts.POST("/create", PostController.Create)
-		// posts.GET("/:articleID/edit", middleware.AuthUser, PostController.Edit)
-		posts.GET("/", PostController.All)
+		posts.POST("/create", middleware.AuthUser, controller.PostCreate)
+		posts.GET("/:articleID/edit", middleware.AuthUser, controller.PostEdit)
+		posts.GET("/:articleID/show", middleware.AuthUser, controller.PostShow)
+		posts.GET("/", controller.PostFind)
 	}
 
 	// auth関連の操作
 	auth := api.Group("auth")
 	{
-		auth.POST("/login", SessionController.LoginController)
-		auth.POST("/logout", middleware.AuthUser, SessionController.Logout)
-		auth.POST("/register", SessionController.Register)
+		auth.POST("/login", controller.AuthLogin)
+		auth.POST("/logout", middleware.AuthUser, controller.AuthLogout)
+		auth.POST("/register", controller.AuthRegister)
 	}
 
 	// static files
